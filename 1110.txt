@@ -1,0 +1,24 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+public class Main {
+	public static void main(String[] args) throws IOException{
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		int N = Integer.parseInt(bf.readLine());
+		int num = 0;
+		int copy = N;
+		while(true){
+			N = ((N%10)*10 + (((N/10) + (N%10))%10));
+			num ++;
+			if(N == copy){
+				break;
+			}
+		}
+		bw.write(num + " ");
+		bw.flush();
+		bw.close();
+	}
+}

@@ -1,0 +1,35 @@
+import java.io.IOException;
+import java.util.Scanner;
+public class Main {
+	public static void main(String[] args) throws IOException{
+		Scanner scanner = new Scanner(System.in);
+		int A = scanner.nextInt();
+		int B = scanner.nextInt();
+		int C = scanner.nextInt();
+		int result = A*B*C;
+		int copy = result;
+		int N = 1;
+		int count = 0;
+
+		while(N!=0){
+			N = result/10;
+			result = N;
+			count++;		
+		}
+		int[] arr = new int[count];
+		for(int i=count-1; i>=0; i--){
+			arr[i]=copy%10;
+			copy = copy/10;
+		}
+		for(int i=0; i<10; i++){
+			int num =0;
+			for(int j=0; j<count; j++){
+				if(arr[j] == i){
+					num++;
+				}
+			}
+			System.out.println(num);
+		}
+		scanner.close();
+	}
+}

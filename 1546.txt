@@ -1,0 +1,24 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.Scanner;
+public class Main {
+	public static void main(String[] args) throws IOException{
+		Scanner scanner = new Scanner(System.in);		
+		int N= scanner.nextInt();
+		double[] score = new double[N];
+		double max = -1;
+		double sum = 0.0;
+		for(int i=0; i<N; i++){
+			score[i] = scanner.nextInt();
+			if(score[i] > max){
+				max = score[i];
+			}
+		}
+		for(int i=0; i<N;i++){
+			score[i] = (score[i] /max) * 100;
+			sum += score[i];
+		}
+		System.out.print((sum/N));
+		scanner.close();	
+	}
+}

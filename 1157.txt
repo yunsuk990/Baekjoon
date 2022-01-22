@@ -1,0 +1,31 @@
+import java.io.IOException;
+import java.util.Scanner;
+public class Main {
+	public static void main(String[] args) throws IOException{
+		Scanner scanner = new Scanner(System.in);
+		String str = scanner.next();
+		int[] arr = new int[26];
+		char result = '?';
+		int max = 0;
+		for(int i=0; i<arr.length;i++){
+			arr[i] = 0;
+		}
+		for(int i=0; i<str.length(); i++){
+			char ch = str.charAt(i);
+			if( (ch >='a')&&(ch<='z')){
+				ch = (char)(ch - 32);
+			}
+			arr[ch-'A']++;
+		}
+		for(int i=0; i<arr.length;i++){
+			if(arr[i] > max){
+				max = arr[i];
+				result = (char)(i+65);
+			}else if(arr[i] == max){
+				result='?';
+			}
+		}
+		System.out.print(result);
+		scanner.close();	
+	}			
+}

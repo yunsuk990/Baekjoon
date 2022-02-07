@@ -1,0 +1,40 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+public class Main {
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");	
+		String a = st.nextToken();
+		String b = st.nextToken();
+		int len = java.lang.Math.max(a.length(), b.length());
+		int[] A = new int[len+1];
+		int[] B = new int[len+1];
+		for(int i=a.length()-1,id=0; i>=0; i--,id++){
+			A[id] = a.charAt(i)-'0';
+		}
+		for(int i=b.length()-1, id=0; i>=0; i--,id++){
+			B[id] = b.charAt(i)-'0';
+		}
+		for(int i=0; i<A.length; i++){
+			int val = A[i]+B[i];
+			if(val>=10){
+				A[i] = val-10;
+				A[i+1] += 1;
+				continue;
+			}
+			A[i] = val;
+		}
+		int i;
+		if(A[A.length-1] == 0) i = A.length-2;
+		else i = A.length-1;
+
+		for(int z = i;z>=0; z--){
+			System.out.print(A[z]);
+		}
+	}	
+}
+
+------------------------------------------------------------------------
+2. BigInteger 사용가능

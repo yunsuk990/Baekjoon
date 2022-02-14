@@ -1,0 +1,43 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+public class Main {
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+		int x = Integer.parseInt(st.nextToken());
+		int y = Integer.parseInt(st.nextToken());
+		int w = Integer.parseInt(st.nextToken());
+		int h = Integer.parseInt(st.nextToken());
+		int distance;
+		if(h-y >=y) distance=y;
+		else distance=h-y;
+		if(x >= w-x){
+			if(w-x <=distance)  distance= w-x;
+		}else{
+			if(x<=distance) distance=x;
+		}
+		System.out.print(distance);
+	}	
+}
+
+--------------------------------------------------------------------------
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+public class Main {
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+		int x = Integer.parseInt(st.nextToken());
+		int y = Integer.parseInt(st.nextToken());
+		int w = Integer.parseInt(st.nextToken());
+		int h = Integer.parseInt(st.nextToken());
+		int x_min = Math.min(w-x, x);
+		int y_min = Math.min(h-y, y);
+		System.out.print(Math.min(x_min, y_min));
+	}	
+}

@@ -1,0 +1,19 @@
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int hour = scanner.nextInt();
+        int minute = scanner.nextInt();
+        int time = scanner.nextInt();
+
+        time = minute + time;
+        for(;time>=60;){
+            hour++;
+            if(hour == 24){
+                hour = 0;
+            }
+            time = time - 60;
+        }
+        System.out.print(hour + " " + time);
+    }
+}

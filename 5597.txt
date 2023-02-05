@@ -1,0 +1,19 @@
+import java.io.IOException;
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        Boolean[] score = new Boolean[31];
+        score[0] = true;
+        int a,b = 0;
+        for(int i=1; i<29; i++){
+            int input = scanner.nextInt();
+            score[input] = true;
+        }
+        for(int i=1; i<31; i++){
+            if(score[i] == null){
+                System.out.println(i);
+            }
+        }
+    }
+}

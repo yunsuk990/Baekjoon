@@ -1,27 +1,35 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 public class Main {
-	public static void main(String[] args) throws IOException{
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int count = Integer.parseInt(br.readLine());
-		int ct=0;
-		for(int i = 0; i<count; i++){
-			Boolean bt = false;
-			String str = br.readLine();
-			for(int j=0; j<str.length(); j++){
-				char ch = str.charAt(j);
-				for(int z=j+1; z<str.length(); z++){
-					if( (z>j+1) && (ch == str.charAt(z))){
-						bt = true;
-						break;
-					}
-				}
-				if(bt == true) break;
-			}
-			if(bt == true) continue;
-			ct++;
-		}
-		System.out.print(ct);
-	}			
+    static Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        int count = 0;
+        int words = scanner.nextInt();
+
+        for(int i=0; i<words; i++){
+            if(check() == true){
+                count++;
+            }
+        }
+        System.out.println(count);
+    }
+
+    public static boolean check(){
+        boolean[] check = new boolean[26]; //a~z
+        int prev = 0;
+        String str = scanner.next();
+
+        for(int i=0; i<str.length(); i++){
+            int now = str.charAt(i);
+            if(prev != now){
+                if(check[now-'a'] == false){
+                    check[now-'a'] = true;
+                    prev = now;
+                }else{
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

@@ -1,0 +1,19 @@
+import java.io.IOException;
+import java.util.Scanner;
+public class Main {
+    static Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+
+        int N = scanner.nextInt();
+        int[] counting = new int[10];
+        while( N != 0){
+            counting[N%10]++;
+            N /= 10;
+        }
+        for(int i=9; i>=0; i--){
+            while (counting[i]-- > 0){
+                System.out.print(i);
+            }
+        }
+    }
+}

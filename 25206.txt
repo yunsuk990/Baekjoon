@@ -1,0 +1,42 @@
+    import java.io.BufferedReader;
+    import java.io.IOException;
+    import java.io.InputStreamReader;
+    import java.util.StringTokenizer;
+
+    public class Main {
+        public static void main(String[] args) throws IOException {
+            BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+            float result = 0.0F;
+            float hakjum = 0.0F;
+
+            for(int i=0; i<20; i++) {
+                StringTokenizer st = new StringTokenizer(bf.readLine());
+                String name = st.nextToken();
+                float score = Float.parseFloat(st.nextToken());
+                String myScore = st.nextToken();
+                hakjum += score;
+                if (myScore.equals("A+")) {
+                    result += score * 4.5F;
+                } else if (myScore.equals("A0")) {
+                    result += score * 4.0F;
+                } else if (myScore.equals("B+")) {
+                    result += score * 3.5F;
+                } else if (myScore.equals("B0")) {
+                    result += score * 3.0F;
+                } else if (myScore.equals("C+")) {
+                    result += score * 2.5F;
+                } else if (myScore.equals("C0")) {
+                    result += score * 2.0F;
+                } else if (myScore.equals("D+")) {
+                    result += score * 1.5F;
+                } else if (myScore.equals("D0")) {
+                    result += score * 1.0F;
+                } else if (myScore.equals("F")) {
+
+                } else if (myScore.equals("P")) {
+                    hakjum -= score;
+                }
+            }
+            System.out.println(result/hakjum);
+        }
+    }

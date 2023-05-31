@@ -1,0 +1,21 @@
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int input = scanner.nextInt();
+        int B = scanner.nextInt();
+        String result = "";
+        for(int i = input; i>0; i=i/B){
+            int rem = i%B;
+            if(B>10 && rem >=10){
+                char a = (char) ('A' + (rem -10));
+               result =  a + result;
+            }else{
+                result = rem + result;
+            }
+        }
+        System.out.println(result);
+    }
+}

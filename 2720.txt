@@ -1,0 +1,21 @@
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int testcase = scanner.nextInt();
+        for(int i =0; i<testcase; i++){
+            String result = "";
+            int input = scanner.nextInt();
+            result += input/25;
+            int next = input%25;
+            result+= " " +next/10;
+            next = next%10;
+            result+= " " +next/5;
+            next = next%5;
+            result+= " " +next/1;
+            System.out.println(result);
+        }
+    }
+}

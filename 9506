@@ -1,0 +1,27 @@
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        while(true){
+            int input = scanner.nextInt();
+            int count = 1;
+            String result = input + " = 1";
+            if(input== -1){
+                return;
+            }
+            for(int i=2; i<input; i++){
+                if(input % i == 0){
+                    result += " + " + i;
+                    count += i;
+                }
+            }
+            if(count == input){
+                System.out.println(result);
+            }else{
+                System.out.println(input + " is NOT perfect.");
+            }
+        }
+    }
+}

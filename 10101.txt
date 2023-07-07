@@ -1,0 +1,34 @@
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int dot1 = scanner.nextInt();
+        int dot2 = scanner.nextInt();
+        int dot3 = scanner.nextInt();
+        int sum = dot1 + dot2 + dot3;
+
+        if((dot1 == 60) && (dot2 == 60) && (dot3 == 60)){
+            System.out.print("Equilateral");
+        } else if (sum == 180) {
+            if(dot1 == dot2){
+                if(dot2 != dot3){
+                    System.out.print("Isosceles");
+                }
+            }else if (dot1 == dot3){
+                if(dot3 != dot2){
+                    System.out.print("Isosceles");
+                }
+            }else if(dot2 == dot3){
+                if(dot3 != dot1){
+                    System.out.print("Isosceles");
+                }
+            }else{
+                System.out.print("Scalene");
+            }
+        }else{
+            System.out.print("Error");
+        }
+    }
+}

@@ -1,0 +1,26 @@
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        while(true){
+            int dot1 = scanner.nextInt();
+            int dot2 = scanner.nextInt();
+            int dot3 = scanner.nextInt();
+            if(dot1 ==0 && dot2 == 0 && dot3 == 0){
+                break;
+            }
+            int max = Math.max(dot1, Math.max(dot2, dot3));
+            if(max >= dot1 + dot2 || max >= dot1 + dot3 || max >= dot2 + dot3){
+                System.out.println("Invalid");
+            } else if ((dot1 == dot2) && (dot2 == dot3)) {
+                System.out.println("Equilateral");
+            } else if ( (dot1==dot2) || (dot1 == dot3) || (dot2 == dot3)) {
+                System.out.println("Isosceles");
+            }else {
+                System.out.println("Scalene");
+            }
+        }
+    }
+}

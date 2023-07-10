@@ -1,0 +1,21 @@
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int num = scanner.nextInt();
+        int min = 0;
+        for(int i =1; i<num; i++){
+            int sum = i;
+            for(int j=i; j>0; j=j/10){
+                sum += j%10;
+            }
+            if(sum == num){
+                min = i;
+                break;
+            }
+        }
+        System.out.println(min);
+    }
+}

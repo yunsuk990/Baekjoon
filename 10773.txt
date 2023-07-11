@@ -1,0 +1,23 @@
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int K = scanner.nextInt();
+        int stack[] = new int[K];
+        int p = -1;
+        int sum = 0;
+        for(int i=0; i<K; i++){
+            int n = scanner.nextInt();
+            if(n != 0){
+                sum += n;
+                stack[++p] = n;
+            }else{
+                sum -= stack[p];
+                p--;
+            }
+        }
+        System.out.println(sum);
+    }
+}

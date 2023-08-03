@@ -1,0 +1,24 @@
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        int[] queue = new int[2*N];
+        for(int i =1; i<=N; i++){
+            queue[i] = i;
+        }
+        int pt = 1;
+        int lt = N;
+
+        while(N != 1){
+            pt++;
+            if(lt - pt == 0)break;
+            int n = queue[pt++];
+            queue[++lt] = n;
+        }
+        System.out.println(queue[lt]);
+    }
+}

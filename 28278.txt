@@ -1,48 +1,47 @@
-import java.io.IOException;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Main {
+    public static void main(String[] args) {
 
-    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
+        Stack<Integer> stack = new Stack<Integer>();
         int N = scanner.nextInt();
-        int[] stack = new int[N+1];
-        int pt = 0;
+        StringBuilder sb = new StringBuilder();
 
         for(int i=0; i<N; i++){
-            switch (scanner.nextInt()){
+            int user = scanner.nextInt();
+            switch (user){
                 case 1:
-                    stack[++pt] = scanner.nextInt();
+                    int data = scanner.nextInt();
+                    stack.push(data);
                     break;
-
                 case 2:
-                    if(pt != 0){
-                        System.out.println(stack[pt--]);
-                    }else{
-                        System.out.println(-1);
+                    if (stack.empty()) {
+                        sb.append(-1).append('\n');
+                    }else {
+                        sb.append(stack.pop()).append('\n');;
                     }
                     break;
-
                 case 3:
-                    System.out.println(pt);
+                    sb.append(stack.size()).append('\n');;
                     break;
-
                 case 4:
-                    if(pt != 0){
-                        System.out.println(0);
+                    if(stack.empty()){
+                        sb.append(1).append('\n');;
                     }else{
-                        System.out.println(1);
+                        sb.append(0).append('\n');;
                     }
                     break;
-
                 case 5:
-                    if(pt != 0){
-                        System.out.println(stack[pt]);
+                    if(stack.empty()){
+                        sb.append(-1).append('\n');;
                     }else{
-                        System.out.println(-1);
+                        sb.append(stack.peek()).append('\n');;
                     }
                     break;
             }
         }
+        System.out.println(sb);
     }
 }

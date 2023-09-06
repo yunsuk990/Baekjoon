@@ -1,0 +1,49 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+        Stack<Integer> waiting = new Stack<Integer>();
+
+        int N = scanner.nextInt();
+        int count = 1;
+        int student[] = new int[N];
+        for(int i=0; i<N; i++) {
+            student[i] = scanner.nextInt();
+        }
+
+        for(int i=0; i<N; i++){
+            if(student[i] == count){
+                count++;
+            }else{
+                if(!waiting.empty() && waiting.peek() == count){
+                    waiting.pop();
+                    i--;
+                    count++;
+                }else{
+                    waiting.push(student[i]);
+                }
+            }
+        }
+
+        boolean result = true;
+
+        for(int i=count; i<=N; i++){
+            if(waiting.peek() == i){
+                waiting.pop();
+                count++;
+            }else{
+                result = false;
+                break;
+            }
+        }
+
+        if(result){
+            System.out.println("Nice");
+        }else{
+            System.out.println("Sad");
+        }
+    }
+}

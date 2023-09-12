@@ -1,0 +1,63 @@
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Main {
+    static int N;
+    static int[][] arr;
+    static int min = Integer.MAX_VALUE;
+    static boolean[] visit;
+
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+
+        N = scanner.nextInt();
+        arr = new int[N][N];
+        visit = new boolean[N];
+        for(int i=0; i<N; i++) {
+            for (int j = 0; j < N; j++) {
+                arr[i][j] = scanner.nextInt();
+            }
+        }
+        dfs(0,0);
+        System.out.println(min);
+    }
+
+    static void dfs(int len, int index){
+        if(len == N/2){
+            diff();
+            return;
+        }
+
+        for(int i = index;i<N;i++){
+            if(!visit[i]){
+                visit[i] = true;
+                dfs(len+1,i+1);
+                visit[i] = false;
+            }
+        }
+    }
+
+    static void diff(){
+        int start = 0;
+        int link = 0;
+        for(int i=0; i<N-1; i++){
+            for(int j=i+1; j<N; j++){
+                if(visit[i] == true && visit[j]== true){
+                    start += arr[i][j];
+                    start += arr[j][i];
+                }else if(visit[i] == false && visit[j] == false){
+                    link += arr[i][j];
+                    link += arr[j][i];
+                }
+            }
+        }
+
+        int val = Math.abs(start - link);
+        if(val == 0){
+            System.out.println(val);
+            System.exit(0);
+        }
+
+        min = Math.min(min, val);
+    }
+}

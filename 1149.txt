@@ -1,0 +1,39 @@
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Main {
+    final static int Red = 0;
+    final static int Green = 1;
+    final static int Blue = 2;
+    static int[][] cost;
+    static int[][] memo;
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        cost = new int[n][3];
+        memo = new int[n][3];
+
+        for(int i=0; i<n; i++){
+            cost[i][Red] = scanner.nextInt();
+            cost[i][Green] = scanner.nextInt();
+            cost[i][Blue] = scanner.nextInt();
+
+        }
+        memo[0][Red] = cost[0][Red];
+        memo[0][Green] = cost[0][Green];
+        memo[0][Blue] = cost[0][Blue];
+        System.out.print(Math.min(Paint_cost(n-1, Red), Math.min(Paint_cost(n-1,Green), Paint_cost(n-1,Blue))));
+    }
+    static int Paint_cost(int n, int color){
+        if(memo[n][color] == 0){
+            if(color == Red){
+                memo[n][color] = Math.min(Paint_cost(n-1,Green), Paint_cost(n-1,Blue)) + cost[n][color];
+            }else if (color == Green){
+                memo[n][color] = Math.min(Paint_cost(n-1,Red), Paint_cost(n-1,Blue)) + cost[n][color];
+            }else{
+                memo[n][color] = Math.min(Paint_cost(n-1,Red), Paint_cost(n-1,Green)) + cost[n][color];
+            }
+        }
+        return memo[n][color];
+    }
+}

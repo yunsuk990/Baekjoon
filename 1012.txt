@@ -1,0 +1,58 @@
+import java.io.IOException;
+import java.util.*;
+
+public class Main {
+
+    static ArrayList<ArrayList<Integer>> graph;
+    static boolean visited[][];
+    static int count;
+    static int[] dirX = {0,0,-1,1};
+    static int[] dirY = {-1,1,0,0};
+    static int N;
+    static int M;
+    static int k;
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int T = scanner.nextInt();
+        for(int i=0; i<T; i++){
+            count = 0;
+            M = scanner.nextInt();
+            N = scanner.nextInt();
+            k = scanner.nextInt();
+            visited = new boolean[N][M];
+            graph = new ArrayList<>();
+            for(int j=0; j<N; j++){
+                graph.add(new ArrayList());
+            }
+
+            for(int z=0; z<k; z++){
+                int y = scanner.nextInt();
+                int x = scanner.nextInt();
+                graph.get(x).add(y);
+            }
+
+            for(int a=0; a<N; a++){
+                for(int z=0; z<graph.get(a).size(); z++){
+                    if(visited[a][graph.get(a).get(z)]) continue;
+                    dfs(a, graph.get(a).get(z));
+                    count++;
+                }
+            }
+            System.out.println(count);
+        }
+    }
+    static void dfs(int x, int y){
+        visited[x][y] = true;
+        for(int i=0; i<4; i++){
+            int nowX = x+ dirX[i];
+            int nowY = y+ dirY[i];
+            if(checkRange(nowX, nowY) && visited[nowX][nowY] == false && graph.get(nowX).contains(nowY)){
+                visited[nowX][nowY] = true;
+                dfs(nowX, nowY);
+            }
+        }
+    }
+    static boolean checkRange(int x, int y){
+        return ((x>=0 && x < N) && (y>=0 && y < M));
+    }
+}

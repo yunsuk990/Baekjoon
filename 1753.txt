@@ -1,0 +1,72 @@
+import java.io.IOException;
+import java.util.*;
+
+public class Main {
+    static List<Node> graph[];
+    static int V;
+    static int[] Dist;
+    static final int INF = 100_000_000;
+
+    static class Node implements Comparable<Node>{
+
+        int end, weight;
+        public Node(int end, int weight){
+            this.end = end;
+            this.weight = weight;
+        }
+
+        @Override
+        public int compareTo(Node o) {
+            return weight - o.weight;
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        V = scanner.nextInt(); //정점 개수
+        int E = scanner.nextInt();  //간선 개수
+        int k = scanner.nextInt(); //시작 정점
+        graph = new ArrayList[V];
+        Dist = new int[V];
+
+        for(int i=0; i<V; i++){
+            graph[i] = new ArrayList();
+        }
+
+        for(int i=0; i<E; i++){
+            int u = scanner.nextInt();
+            int v = scanner.nextInt();
+            int w = scanner.nextInt();
+            graph[u-1].add(new Node(v-1, w));
+        }
+        dijkstra(k);
+        for(int i=0; i< Dist.length; i++){
+            if(Dist[i]== INF){
+                System.out.println("INF");
+            }else{
+                System.out.println(Dist[i]);
+            }
+        }
+    }
+    static void dijkstra(int src){
+        PriorityQueue<Node> pq = new PriorityQueue<>();
+        boolean[] visited = new boolean[V];
+        for(int i=0; i<V; i++){
+            Dist[i] = INF;
+        }
+        Dist[src-1] = 0;
+        pq.add(new Node(src-1,0));
+        while (!pq.isEmpty()){
+            Node curr = pq.poll();
+            int u = curr.end;
+            if(visited[u]) continue;
+            visited[u] = true;
+            for(Node node : graph[u]){
+                if(Dist[node.end] > Dist[u] + node.weight){
+                    Dist[node.end] = Dist[u] + node.weight;
+                    pq.add(new Node(node.end, Dist[node.end]));
+                }
+            }
+        }
+    }
+}

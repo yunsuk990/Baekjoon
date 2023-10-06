@@ -1,0 +1,95 @@
+import java.io.IOException;
+import java.util.*;
+
+public class Main {
+
+    static List<Node> graph[];
+
+    static int N;
+
+    static int[] Dist;
+
+    static final int INF = 200000000;
+
+    static int u;
+    static int v;
+
+    static class Node implements Comparable<Node>{
+
+        int end; int weight;
+        public Node(int x, int y) {
+            end = x;
+            weight = y;
+        }
+
+        @Override
+        public int compareTo(Node o) {
+            return weight - o.weight;
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        N = scanner.nextInt();
+        int E = scanner.nextInt();
+        Dist = new int[N];
+        graph = new ArrayList[N];
+
+        for(int i=0; i<N; i++){
+            graph[i] = new ArrayList<>();
+        }
+
+        for(int i=0; i<E; i++){
+            int a = scanner.nextInt();
+            int b = scanner.nextInt();
+            int c = scanner.nextInt();
+            graph[a-1].add(new Node(b-1,c));
+            graph[b-1].add(new Node(a-1,c));
+        }
+
+        u = scanner.nextInt();
+        v = scanner.nextInt();
+
+        int res1 = 0;
+        res1 += dijkstra(1, u);
+        res1 += dijkstra(u,v);
+        res1 += dijkstra(v,N);
+
+        int res2 = 0;
+
+        res2 += dijkstra(1, v);
+        res2 += dijkstra(v, u);
+        res2 += dijkstra(u, N);
+
+
+
+        int ans = (res1 >=INF && res2 >= INF) ? -1 : Math.min(res1, res2);
+
+
+        System.out.println(ans);
+
+    }
+
+    static int dijkstra(int src, int end){
+        PriorityQueue<Node> pq = new PriorityQueue<>();
+        boolean visited[] = new boolean[N];
+        for(int i=0; i<N; i++){
+            Dist[i] = INF;
+        }
+        Dist[src-1] = 0;
+        pq.add(new Node(src-1,0));
+        while (!pq.isEmpty()){
+            Node curr = pq.poll();
+            int u = curr.end;
+            if(visited[u]) continue;
+            visited[u] = true;
+            for(Node node : graph[u]){
+                if(Dist[node.end] > Dist[u] + node.weight){
+                    Dist[node.end] = Dist[u] + node.weight;
+                    pq.add(new Node(node.end, Dist[node.end]));
+                }
+            }
+        }
+        return Dist[end-1];
+    }
+}

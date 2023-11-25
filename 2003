@@ -1,0 +1,33 @@
+import java.io.IOException;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        int M = scanner.nextInt();
+        int cnt = 0;
+        int start = 0;
+        int end = 0;
+        int[] arr = new int[N];
+        for(int i=0; i<N; i++){
+            arr[i] = scanner.nextInt();
+        }
+        int sum = arr[0];
+        while(true){
+            try{
+                if(sum == M){
+                    cnt++;
+                    sum = sum + arr[++end] - arr[start++];
+                } else if (sum < M) {
+                    sum += arr[++end];
+                } else{
+                    sum -= arr[start++];
+                }
+            }catch (Exception e){
+                break;
+            }
+        }
+        System.out.println(cnt);
+    }
+}

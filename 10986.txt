@@ -1,0 +1,30 @@
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        int M = scanner.nextInt();
+        long[] arr = new long[N];
+        long[] remain = new long[M];
+        arr[0] = scanner.nextInt();
+        for(int i=1; i<N; i++){
+            arr[i] = arr[i-1] + scanner.nextInt();
+        }
+
+        long  count = 0;
+        for(int i=0 ; i<N; i++){
+            int remainder = (int)(arr[i] % M);
+            if(remainder == 0) count++;
+            remain[remainder]++;
+        }
+
+        for(int i=0; i<M; i++){
+            if(remain[i] > 1 ){
+                count += ((remain[i]*(remain[i]-1))/2);
+            }
+        }
+        System.out.println(count);
+    }
+}

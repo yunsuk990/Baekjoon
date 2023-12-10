@@ -1,0 +1,98 @@
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+public class Main {
+    static int[] part;
+    static int[] myarr;
+    static int checkSecret;
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int S = scanner.nextInt();
+        int P = scanner.nextInt();
+        char dna[] = new char[S];
+        part = new int[4];
+        myarr = new int[4];
+        int count=0;
+        checkSecret = 0;
+        String st = scanner.next();
+        dna = st.toCharArray();
+
+        for(int i=0; i<4; i++){
+            part[i] = scanner.nextInt();
+            if(part[i] == 0){
+                checkSecret++;
+            }
+        }
+
+        for(int i=0; i<P; i++){
+            Add(dna[i]);
+        }
+        if(checkSecret == 4) count++;
+        for(int i = P; i<S; i++){
+            int j = i-P;
+            Add(dna[i]);
+            Remove(dna[j]);
+            if(checkSecret == 4) count++;
+        }
+        System.out.println(count);
+    }
+
+    private static void Add(char c){
+        switch (c){
+            case 'A':
+                myarr[0]++;
+                if(myarr[0] == part[0]){
+                    checkSecret++;
+                }
+                break;
+            case 'C':
+                myarr[1]++;
+                if(myarr[1] == part[1]){
+                    checkSecret++;
+                }
+                break;
+            case 'G':
+                myarr[2]++;
+                if(myarr[2] == part[2]){
+                    checkSecret++;
+                }
+                break;
+            case 'T':
+                myarr[3]++;
+                if(myarr[3] == part[3]){
+                    checkSecret++;
+                }
+                break;
+        }
+    }
+
+    private static void Remove(char c){
+        switch (c){
+            case 'A':
+                if(myarr[0] == part[0]){
+                    checkSecret--;
+                }
+                myarr[0]--;
+                break;
+            case 'C':
+                if(myarr[1] == part[1]){
+                    checkSecret--;
+                }
+                myarr[1]--;
+                break;
+            case 'G':
+                if(myarr[2] == part[2]){
+                    checkSecret--;
+                }
+                myarr[2]--;
+                break;
+            case 'T':
+                if(myarr[3] == part[3]){
+                    checkSecret--;
+                }
+                myarr[3]--;
+                break;
+        }
+    }
+}

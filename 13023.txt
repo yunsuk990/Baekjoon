@@ -1,0 +1,53 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+    static int N;
+    static boolean[] visited;
+    static boolean arrive;
+    static ArrayList<Integer>[] A;
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        N = scanner.nextInt();
+        int M = scanner.nextInt();
+        visited = new boolean[N];
+        A = new ArrayList[N];
+        arrive = false;
+
+        for(int i=0; i<N; i++){
+            A[i] = new ArrayList<Integer>();
+        }
+
+        for(int i=0; i<M; i++){
+            int s = scanner.nextInt();
+            int e = scanner.nextInt();
+            A[s].add(e);
+            A[e].add(s);
+        }
+
+        for(int i=0; i<N; i++){
+            DFS(i,1);
+            if(arrive) break;
+        }
+        if(arrive){
+            System.out.println(1);
+        }else{
+            System.out.println(0);
+        }
+    }
+
+    static void DFS(int number, int depth){
+        if(depth == 5 || arrive){
+            arrive = true;
+            return;
+        }
+        visited[number] = true;
+        for(int i : A[number]){
+            if(!visited[i]){
+                DFS(i, depth+1);
+            }
+        }
+        visited[number] = false;
+    }
+}

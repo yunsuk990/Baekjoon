@@ -1,0 +1,58 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    static boolean visited[];
+    static ArrayList<int[]>[] A;
+    static int dis[];
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int V = scanner.nextInt();
+        A = new ArrayList[V+1];
+        visited = new boolean[V+1];
+        dis = new int[V+1];
+        for(int i=0; i<V+1; i++){
+            A[i] = new ArrayList<int[]>();
+        }
+        for(int i=0; i<V; i++){
+            int n = scanner.nextInt();
+            while (true) {
+                int a = scanner.nextInt();
+                if(a == -1) break;
+                int b = scanner.nextInt();
+                A[n].add(new int[]{a, b});
+            }
+        }
+
+        bfs(1);
+        int max = 1;
+        for(int i=2; i<dis.length; i++){
+            if(dis[max] < dis[i]){
+                max = i;
+            }
+        }
+        visited = new boolean[V+1];
+        dis = new int[V+1];
+        bfs(max);
+        Arrays.sort(dis);
+        System.out.println(dis[V]);
+
+    }
+
+    static void bfs(int num){
+        Queue<Integer> q = new LinkedList<>();
+        q.add(num);
+        visited[num] = true;
+        while (!q.isEmpty()) {
+            int data = q.poll();
+            for (int[] i : A[data]) {
+                if (!visited[i[0]]) {
+                    visited[i[0]] = true;
+                    q.add(i[0]);
+                    dis[i[0]] = dis[data] + i[1];
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,50 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        PriorityQueue<Integer> minus = new PriorityQueue<>();
+        PriorityQueue<Integer> plus = new PriorityQueue<>(Comparator.reverseOrder());
+        int one = 0;
+        int zero = 0;
+
+        for(int i=0; i<N; i++){
+            int num = scanner.nextInt();
+            if(num>0){
+                if(num==1) one++;
+                else plus.add(num);
+            } else if (num < 0) {
+                minus.add(num);
+            }else {
+                zero++;
+            }
+        }
+
+        int sum = one;
+        while (minus.size() != 0){
+            int a = minus.remove();
+            if(minus.size() == 0){
+                if(zero == 0){
+                    sum += a;
+                }
+                break;
+            }
+            int b = minus.remove();
+            sum += a*b;
+        }
+
+        while (plus.size() != 0){
+            int a = plus.remove();
+            if(plus.size() == 0){
+                sum += a;
+                break;
+            }
+            int b = plus.remove();
+            sum += a*b;
+        }
+        System.out.println(sum);
+    }
+}

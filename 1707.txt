@@ -1,0 +1,58 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+
+    static ArrayList<Integer>[] graph;
+    static int check[];
+    static boolean visited[];
+    static boolean isEven;
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int K = scanner.nextInt();
+
+        for(int i=0; i<K; i++){
+            int V = scanner.nextInt();
+            int E = scanner.nextInt();
+            graph = new ArrayList[V+1];
+            visited = new boolean[V+1];
+            check = new int[V+1];
+            isEven = true;
+            for(int z=1; z<=V; z++){
+                graph[z] = new ArrayList<>();
+            }
+            for(int j=0; j<E; j++){
+                int s = scanner.nextInt();
+                int e = scanner.nextInt();
+                graph[s].add(e);
+            }
+
+            for(int a=1; a<=V; a++){
+                if(isEven){
+                    dfs(a);
+                }else{
+                    break;
+                }
+            }
+
+            if(isEven){
+                System.out.println("YES");
+            }else{
+                System.out.println("NO");
+            }
+        }
+    }
+
+    static void dfs(int val){
+        visited[val] = true;
+        for(int i : graph[val]){
+            if(!visited[i]) {
+                check[i] = (check[val]+1)%2;
+                dfs(i);
+            }
+
+            if(check[val] == check[i]){
+                isEven = false;
+            }
+        }
+    }
+}

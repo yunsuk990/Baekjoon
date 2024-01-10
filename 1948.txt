@@ -1,0 +1,67 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        int M = scanner.nextInt();
+        int satel[] = new int[N+1];
+        int time[] = new int[N+1];
+        ArrayList<Node> graph[] = new ArrayList[N+1];
+        ArrayList<Node> Regraph[] = new ArrayList[N+1];
+
+        for(int i=1; i<=N; i++){
+            graph[i] = new ArrayList<>();
+            Regraph[i] = new ArrayList<>();
+        }
+        for(int i=1; i<=M;i ++){
+            int s = scanner.nextInt();
+            int e = scanner.nextInt();
+            int t = scanner.nextInt();
+            graph[s].add(new Node(e,t));
+            Regraph[e].add(new Node(s,t)); // 7->6 5
+            satel[e]++;
+        }
+        int start = scanner.nextInt();
+        int end = scanner.nextInt();
+        int count = 0;
+        Queue<Node> q = new LinkedList<>();
+        q.offer(new Node(start,0));
+        while (!q.isEmpty()){
+            Node node = q.poll();
+            for(Node i : graph[node.targetNode]){
+                satel[i.targetNode]--;
+                time[i.targetNode] = Math.max(time[i.targetNode], time[node.targetNode]+i.value);
+                if(satel[i.targetNode] == 0){
+                    q.offer(i);
+                }
+            }
+        }
+        q = new LinkedList<>();
+        q.offer(new Node(end,Regraph[end].get(0).value));
+        boolean visited[] = new boolean[N+1];
+        while (!q.isEmpty()) {
+            Node node = q.poll();
+            for (Node i : Regraph[node.targetNode]) {
+                if (time[node.targetNode] == i.value + time[i.targetNode]) {
+                    count++;
+                    if (visited[i.targetNode] == false) {
+                        q.offer(i);
+                        visited[i.targetNode] = true;
+                    }
+                }
+            }
+        }
+        System.out.println(time[end]);
+        System.out.println(count);
+    }
+}
+
+class Node {
+    int targetNode;
+    int value;
+    Node(int targetNode, int time){
+        this.targetNode = targetNode;
+        value = time;
+    }
+}

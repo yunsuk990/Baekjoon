@@ -1,0 +1,63 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        int M = scanner.nextInt();
+        int distance[] = new int[N+1];
+        Arrays.fill(distance, Integer.MAX_VALUE);
+
+        Edge edges[] = new Edge[M+1];
+        for(int i=0;i<M; i++){
+            int s = scanner.nextInt();
+            int e = scanner.nextInt();
+            int v = scanner.nextInt();
+            edges[i] = new Edge(s,e,v);
+        }
+        distance[1] = 0;
+
+        for(int i=1; i<N; i++){
+            for(int j=0; j<M; j++){
+                Edge edge = edges[j];
+                if(distance[edge.startNode] != Integer.MAX_VALUE &&
+                    distance[edge.endNode] > distance[edge.startNode] + edge.value){
+                    distance[edge.endNode] = distance[edge.startNode] + edge.value;
+                }
+            }
+        }
+
+        boolean mCycle = false;
+        for(int i=0; i<M; i++){
+            Edge edge = edges[i];
+            if(distance[edge.startNode] != Integer.MAX_VALUE &&
+                    distance[edge.endNode] > distance[edge.startNode] + edge.value) {
+                mCycle = true;
+            }
+        }
+
+        if(!mCycle){
+            for(int i=2; i<=N; i++){
+                if(distance[i] == Integer.MAX_VALUE){
+                    System.out.println("-1");
+                }else{
+                    System.out.println(distance[i]);
+                }
+            }
+        }else{
+            System.out.print("-1");
+        }
+    }
+
+    static class Edge{
+        int startNode;
+        int endNode;
+        int value;
+        Edge(int s, int e, int v){
+            startNode = s;
+            endNode = e;
+            value = v;
+        }
+    }
+}

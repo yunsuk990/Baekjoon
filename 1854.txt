@@ -1,0 +1,70 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        int M = scanner.nextInt();
+        int K = scanner.nextInt();
+        ArrayList<Edge> graph[] = new ArrayList[N + 1];
+        PriorityQueue<Integer> distQ[] = new PriorityQueue[N+1];
+        Comparator<Integer> cp = new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2-o1;
+            }
+        };
+
+        for(int i=0; i<=N;i++){
+            distQ[i] = new PriorityQueue<>(K, cp);
+        }
+
+        for(int i=1; i<=N; i++){
+            graph[i] = new ArrayList<>();
+        }
+
+        for(int i=0; i<M; i++){
+            int s = scanner.nextInt();
+            int e = scanner.nextInt();
+            int v = scanner.nextInt();
+            graph[s].add(new Edge(e,v));
+        }
+        PriorityQueue<Edge> q = new PriorityQueue<>();
+        q.add(new Edge(1,0));
+        distQ[1].add(0);
+        while (!q.isEmpty()){
+            Edge u = q.poll();
+            for(Edge next : graph[u.vertex]){
+                if(distQ[next.vertex].size() < K) {
+                    distQ[next.vertex].add(u.value + next.value);
+                    q.add(new Edge(next.vertex, u.value + next.value));
+                } else if (distQ[next.vertex].peek() > u.value + next.value){
+                    distQ[next.vertex].poll();
+                    distQ[next.vertex].add(u.value + next.value);
+                    q.add(new Edge(next.vertex, u.value + next.value));
+                }
+            }
+        }
+
+        for(int i=1; i<=N; i++){
+            if(distQ[i].size() == K){
+                System.out.println(distQ[i].peek());
+            }else{
+                System.out.println(-1);
+            }
+        }
+    }
+    static class Edge implements Comparable<Edge>{
+        int vertex;
+        int value;
+        Edge(int vertex, int value){
+            this.vertex = vertex;
+            this.value = value;
+        }
+        @Override
+        public int compareTo(Edge o){
+            return value - o.value;
+        }
+    }
+}

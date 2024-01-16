@@ -1,0 +1,53 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+
+    static int[] sort;
+    static int[] level;
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int t = scanner.nextInt();
+
+        for(int i=0; i<t; i++){
+            int count = scanner.nextInt();
+            sort = new int[count*2];
+            level = new int[count*2];
+            for(int j=0; j<count*2; j++){
+                sort[j] = j;
+                level[j] = 1;
+            }
+            Map<String, Integer> map = new HashMap<>();
+
+            int idx = 0;
+            for(int z=0;z<count; z++){
+                String friend1 = scanner.next();
+                String friend2 = scanner.next();
+                if(!map.containsKey(friend1)){
+                    map.put(friend1, idx++);
+                }
+                if(!map.containsKey(friend2)){
+                    map.put(friend2, idx++);
+                }
+                System.out.println(union(map.get(friend1), map.get(friend2)));
+            }
+        }
+    }
+
+    static int union(int a, int b){
+        a = find(a);
+        b = find(b);
+        int count = 0;
+        if(a!=b){
+            sort[b] = a;
+            level[a] += level[b];
+        }
+        return level[a];
+    }
+
+    static int find(int num){
+        if(sort[num] != num){
+            return sort[num] = find(sort[num]);
+        }
+        return num;
+    }
+}

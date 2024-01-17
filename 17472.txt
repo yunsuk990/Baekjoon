@@ -1,0 +1,151 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+
+    static int x[] = {-1,0,1,0};
+    static int y[] = {0,1,0,-1};
+    static boolean visited[][];
+    static int map[][];
+    static int N, M;
+    static int cNum;
+    static ArrayList<int[]> mlist;
+    static ArrayList<ArrayList<int[]>> sumlist;
+
+    static int[] parent;
+
+    static PriorityQueue<Edge> queue;
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        N = scanner.nextInt();
+        M = scanner.nextInt();
+        map = new int[N][M];
+        visited = new boolean[N][M];
+        for(int i=0; i<N;i++){
+            for(int j=0;j<M;j++){
+                map[i][j] = scanner.nextInt();
+            }
+        }
+
+        cNum = 1;
+        sumlist = new ArrayList<>();
+        for(int i=0; i<N;i++){
+            for(int j=0;j<M;j++){
+                if(map[i][j] != 0 && visited[i][j] != true){
+                    BFS(i,j);
+                    cNum++;
+                    sumlist.add(mlist);
+                }
+            }
+        }
+
+        queue = new PriorityQueue<Edge>();
+        for(int i=0; i<sumlist.size(); i++){
+            ArrayList<int[]> now = sumlist.get(i);
+            for(int j=0; j<now.size(); j++){
+                int r = now.get(j)[0];
+                int c = now.get(j)[1];
+                int now_S = map[r][c];
+                for(int z=0;z<4; z++){
+                    int tempX = x[z];
+                    int tempY = y[z];
+                    int length = 0;
+                    while (r+tempX >=0 && r + tempX < N && c+tempY >=0 && c+tempY<M){
+                        if(map[r+tempX][c+tempY] == now_S) break;
+                        else if (map[r+tempX][c+tempY] != 0) {
+                            if(length > 1){
+                                queue.add(new Edge(now_S,map[r+tempX][c+tempY],length));
+                            }
+                            break;
+                        }else{
+                            length++;
+                        }
+                        if(tempX < 0)tempX--;
+                        else if (tempX > 0) tempX++;
+                        else if(tempY < 0) tempY--;
+                        else if (tempY > 0) tempY++;
+                    }
+                }
+            }
+        }
+
+        parent = new int[cNum];
+        for(int i=0; i<parent.length; i++){
+            parent[i] = i;
+        }
+
+        int useNode = 0;
+        int result = 0;
+        while (!queue.isEmpty()){
+            Edge now = queue.poll();
+            if(find(now.s) != find(now.e)){
+                union(now.s, now.e);
+                result += now.v;
+                useNode++;
+            }
+        }
+        if(useNode == cNum-2){
+            System.out.println(result);
+        }else{
+            System.out.println(-1);
+        }
+    }
+
+    static void BFS(int i, int j){
+        Queue<int[]> q = new LinkedList<>();
+        q.offer(new int[]{i,j});
+        mlist = new ArrayList<>();
+        mlist.add(new int[]{i,j});
+        visited[i][j] = true;
+        map[i][j] = cNum;
+        while (!q.isEmpty()){
+            int now[] = q.poll();
+            int r = now[0];
+            int c = now[1];
+            for(int z=0; z<4; z++){
+                int nextX = now[0] + x[z];
+                int nextY = now[1] + y[z];
+                if(nextX >=0 && nextX < N && nextY >=0 && nextY < M ){
+                    if(visited[nextX][nextY] == false && map[nextX][nextY] != 0){
+                        map[nextX][nextY] = cNum;
+                        visited[nextX][nextY] = true;
+                        q.add(new int[]{nextX, nextY});
+                        mlist.add(new int[]{nextX, nextY});
+                    }
+                }
+            }
+        }
+    }
+
+    static void union(int a, int b){
+        a = find(a);
+        b = find(b);
+        if(a!=b){
+            parent[b] = a;
+        }
+    }
+
+    static int find(int num){
+        if(parent[num] == num){
+            return num;
+        }else{
+            return parent[num] = find(parent[num]);
+        }
+    }
+
+    static class Edge implements Comparable<Edge>{
+        int s;
+        int e;
+        int v;
+        Edge(int start, int end, int value){
+            s = start;
+            e = end;
+            v = value;
+        }
+
+
+        @Override
+        public int compareTo(Edge o) {
+            return v - o.v;
+        }
+    }
+}

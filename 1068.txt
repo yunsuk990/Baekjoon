@@ -1,0 +1,50 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+    static boolean visited[];
+    static ArrayList<Integer> graph[];
+    static int answer;
+    static int del;
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        graph = new ArrayList[n];
+        visited = new boolean[n];
+        answer = 0;
+        for(int i=0; i<n;i++){
+            graph[i] = new ArrayList<>();
+        }
+        int start = -1;
+        for(int i=0; i<n;i++){
+            int num = scanner.nextInt();
+            if(num != -1){
+                graph[num].add(i);
+                graph[i].add(num);
+            }else{
+                start = i;
+            }
+        }
+        del = scanner.nextInt();
+        if(del == start){
+            System.out.println(0);
+        }else{
+            dfs(start);
+            System.out.println(answer);
+        }
+
+    }
+
+    static void dfs(int num){
+        visited[num] = true;
+        int node = 0;
+        for(int i : graph[num]){
+            if(i != del && visited[i] == false){
+                dfs(i);
+                node++;
+            }
+        }
+        if(node == 0) {
+            answer++;
+        }
+    }
+}

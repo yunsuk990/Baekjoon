@@ -1,0 +1,68 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+
+    static int unionSort[];
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int V = scanner.nextInt();
+        int E = scanner.nextInt();
+        unionSort = new int[V+1];
+        PriorityQueue<Edge> q = new PriorityQueue<>();
+
+        for(int i=1; i<=V; i++){
+            unionSort[i] = i;
+        }
+
+        for(int i=0; i<E; i++){
+            int s = scanner.nextInt();
+            int e = scanner.nextInt();
+            int v = scanner.nextInt();
+            q.add(new Edge(s,e,v));
+        }
+
+        int useEdge = 0;
+        int result = 0;
+        while (useEdge < V-1){
+            Edge now = q.poll();
+            if(find(now.start) != find(now.end)){
+                union(now.start, now.end);
+                result += now.value;
+                useEdge++;
+            }
+        }
+        System.out.println(result);
+    }
+
+    static void union(int a, int b){
+        a = find(a);
+        b = find(b);
+        if(a!=b){
+            unionSort[b] = a;
+        }
+    }
+
+    static int find(int num){
+        if(unionSort[num] == num){
+            return num;
+        }else{
+            return unionSort[num] = find(unionSort[num]);
+        }
+    }
+
+    static class Edge implements Comparable<Edge>{
+        int start;
+        int end;
+        int value;
+        Edge(int s, int e, int v){
+            start = s;
+            end = e;
+            value = v;
+        }
+
+        @Override
+        public int compareTo(Edge o) {
+            return value - o.value;
+        }
+    }
+}

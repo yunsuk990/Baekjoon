@@ -1,0 +1,86 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+    static int N, M;
+    static int[] parent;
+
+    static PriorityQueue<Edge> queue;
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        N = scanner.nextInt();
+        int graph[][] = new int[N+1][N+1];
+        int sum = 0;
+        queue = new PriorityQueue<>();
+        parent = new int[N+1];
+        for(int i=1; i<=N;i++){
+            parent[i] = i;
+        }
+        for(int i=0; i<N; i++){
+            String input = scanner.next();
+            for(int j=0; j<N; j++){
+                int temp = 0;
+                if(input.equals("0")){
+                    graph[i][j] = 0;
+                }else if (input.charAt(j) >= 'a' && input.charAt(j) <='z'){
+                    temp = input.charAt(j) - 'a' +1;
+                }else if (input.charAt(j) >= 'A' && input.charAt(j) <='Z') {
+                    temp = input.charAt(j) - 'A' +27;
+                }
+                sum += temp;
+                if(temp != 0 && i != j){
+                    queue.offer(new Edge(i+1,j+1,temp));
+                }
+            }
+        }
+
+        int result = 0;
+        int useEdge = 0;
+        while (!queue.isEmpty()){
+            Edge now = queue.poll();
+            if(find(now.s) != find(now.e)){
+                union(now.s, now.e);
+                result += now.v;
+                useEdge++;
+            }
+        }
+
+        if(useEdge == N-1){
+            System.out.println(sum - result);
+        }else{
+            System.out.println(-1);
+        }
+    }
+
+    static void union(int a, int b){
+        a = find(a);
+        b = find(b);
+        if(a!=b){
+            parent[b] = a;
+        }
+    }
+
+    static int find(int num){
+        if(parent[num] == num){
+            return num;
+        }else{
+            return parent[num] = find(parent[num]);
+        }
+    }
+
+    static class Edge implements Comparable<Edge>{
+        int s;
+        int e;
+        int v;
+        Edge(int start, int end, int value){
+            s = start;
+            e = end;
+            v = value;
+        }
+
+
+        @Override
+        public int compareTo(Edge o) {
+            return v - o.v;
+        }
+    }
+}

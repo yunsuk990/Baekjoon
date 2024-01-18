@@ -1,0 +1,67 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+    static int tree[][];
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        tree = new int[N+1][2];
+        for(int i=0; i<N; i++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            char input = st.nextToken().charAt(0);
+            int index = input - 'A' +1;
+            input = st.nextToken().charAt(0);
+            int leftInput;
+            int rightInput;
+            if(input != '.'){
+                leftInput = input - 'A' +1;
+            }else{
+                leftInput = -1;
+            }
+            input = st.nextToken().charAt(0);
+            if(input != '.'){
+                rightInput = input - 'A' +1;
+            }else{
+                rightInput = -1;
+            }
+            tree[index][0] = leftInput;
+            tree[index][1] = rightInput;
+        }
+        preOrder(1);
+        System.out.println();
+        middOrder(1);
+        System.out.println();
+        lastOrder(1);
+    }
+
+    static void preOrder(int num){
+        System.out.print((char)(num+'A'-1));
+        if(tree[num][0] != -1){
+            preOrder(tree[num][0]);
+        }
+        if(tree[num][1] != -1){
+            preOrder(tree[num][1]);
+        }
+    }
+
+    static void middOrder(int num){
+        if(tree[num][0] != -1){
+            middOrder(tree[num][0]);
+        }
+        System.out.print((char)(num+'A'-1));
+        if(tree[num][1] != -1){
+            middOrder(tree[num][1]);
+        }
+    }
+
+
+    static void lastOrder(int num){
+        if(tree[num][0] != -1){
+            lastOrder(tree[num][0]);
+        }
+        if(tree[num][1] != -1){
+            lastOrder(tree[num][1]);
+        }
+        System.out.print((char)(num+'A'-1));
+    }
+}

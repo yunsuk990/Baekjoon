@@ -1,0 +1,52 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+    static int tree[];
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        int M = scanner.nextInt();
+        int treeHeight = 0;
+        int nodeCount = N;
+        while (nodeCount !=0){
+            nodeCount /= 2;
+            treeHeight++;
+        }
+        int treeSize = (int)Math.pow(2, treeHeight+1);
+        int startIndex = treeSize/2-1;
+        tree = new int[treeSize];
+        Arrays.fill(tree, Integer.MAX_VALUE);
+        for(int i= startIndex+1; i<=startIndex+N;i++){
+            tree[i] = scanner.nextInt();
+        }
+        setTree(treeSize-1);
+
+        for(int i=0; i<M; i++){
+            int s = scanner.nextInt();
+            int e = scanner.nextInt();
+            System.out.println(getMin(s + startIndex, e + startIndex));
+        }
+    }
+    static int getMin(int s, int e){
+        int min = Integer.MAX_VALUE;
+        while (s <= e){
+            if(s%2 == 1){
+                min = Math.min(tree[s],min);
+                s++;
+            }
+            if(e%2 == 0){
+                min = Math.min(tree[e], min);
+                e--;
+            }
+            s = s/2;
+            e = e/2;
+        }
+        return min;
+    }
+    static void setTree(int i){
+        while (i != 1){
+            tree[i/2] = Math.min(tree[i/2],tree[i]);
+            i--;
+        }
+    }
+}

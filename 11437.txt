@@ -1,0 +1,77 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+    static ArrayList<Integer> tree[];
+    static boolean visited[];
+    static int[] depth;
+    static int[] parent;
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+
+        int N = scanner.nextInt();
+        tree = new ArrayList[N+1];
+        visited = new boolean[N+1];
+        depth = new int[N+1];
+        parent = new int[N+1];
+
+        for(int i=1; i<=N; i++){
+            tree[i] = new ArrayList<>();
+        }
+
+        for(int i=0; i<N-1; i++){
+            int s = scanner.nextInt();
+            int e = scanner.nextInt();
+            tree[s].add(e);
+            tree[e].add(s);
+        }
+        BFS(1);
+        int M = scanner.nextInt();
+        for(int i=0 ; i<M ;i++){
+            int s = scanner.nextInt();
+            int e = scanner.nextInt();
+            int LCA = excuteLCA(s,e);
+            System.out.println(LCA);
+        }
+    }
+    static int excuteLCA(int a ,int b){
+        if(depth[a] < depth[b]){
+            int temp = a;
+            a = b;
+            b = temp;
+        }
+
+        while (depth[a] != depth[b]){
+            a = parent[a];
+        }
+        while ( a != b){
+            a = parent[a];
+            b = parent[b];
+        }
+        return a;
+    }
+    static void BFS(int num){
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(num);
+        visited[num] = true;
+        int level = 1;
+        int count = 0;
+        int now_size = 1;
+        while (!q.isEmpty()){
+            int now = q.poll();
+            for(int i: tree[now]){
+                if(!visited[i]){
+                    visited[i] = true;
+                    parent[i] = now;
+                    depth[i] = level;
+                    q.add(i);
+                }
+            }
+            count++;
+            if(count == now_size){
+                count = 0;
+                now_size = q.size();
+                level++;
+            }
+        }
+    }
+}

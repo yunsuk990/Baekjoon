@@ -1,0 +1,33 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+
+        int M = scanner.nextInt();
+        int sum = 0;
+        double result = 0.0;
+        int colorCount[] = new int[51];
+        double probabilty[] = new double[51];
+
+        for(int i=0; i<M;i++){
+            int color = scanner.nextInt();
+            sum += color;
+            colorCount[i] = color;
+        }
+        int k = scanner.nextInt();
+
+        for(int i=0; i<M;i++){
+            if(colorCount[i] >= k){
+                probabilty[i] = 1.0;
+                for(int j=0; j<k; j++){
+                    probabilty[i] *= (double) (colorCount[i]-j) / (sum - j);
+                }
+            }
+            result += probabilty[i];
+        }
+        System.out.println(result);
+
+    }
+}

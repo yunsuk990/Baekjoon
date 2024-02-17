@@ -1,0 +1,29 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        Map<Integer, Boolean> cardNum = new HashMap<>();
+
+
+        for(int i=0; i<N; i++){
+            cardNum.put(scanner.nextInt(), true);
+        }
+
+        int M = scanner.nextInt();
+        int [] findNum = new int[M];
+        for(int i=0; i<M; i++){
+            findNum[i] = scanner.nextInt();
+        }
+
+        for(int i=0; i<M; i++){
+            if(cardNum.get(findNum[i]) != null){
+                System.out.print("1 ");
+            }else{
+                System.out.print("0 ");
+            }
+        }
+    }
+}

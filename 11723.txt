@@ -1,0 +1,57 @@
+import java.io.*;
+import java.util.HashSet;
+import java.util.Scanner;
+class Main {
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        HashSet<Integer> set = new HashSet<>();
+        HashSet<Integer> sett = new HashSet<>();
+        StringBuilder sb = new StringBuilder();
+
+        for(int a=1; a<=20; a++){
+            sett.add(a);
+        }
+
+
+        int M = scanner.nextInt();
+
+        for(int i=0; i<M; i++) {
+            String input = scanner.next();
+            int test = 0;
+            if (!input.equals("all") && !input.equals("empty")) {
+                test = scanner.nextInt();
+            }
+
+            switch (input) {
+                case "add":
+                    set.add(test);
+                    break;
+                case "remove":
+                    set.remove(test);
+                    break;
+                case "check":
+                    if (set.contains(test)) {
+                        sb.append(1+"\n");
+                    } else {
+                        sb.append(0+"\n");
+                    }
+                    break;
+                case "toggle":
+                    if (set.contains(test)) {
+                        set.remove(test);
+                    } else {
+                        set.add(test);
+                    }
+                    break;
+                case "all":
+                    set.clear();
+                    set = (HashSet<Integer>) sett.clone();
+                    break;
+                case "empty":
+                    set.clear();
+                    break;
+            }
+        }
+        System.out.println(sb);
+    }
+}

@@ -1,0 +1,15 @@
+class Solution {
+    public String solution(String s, int n) {
+        String answer = "";
+        for(int i=0; i<s.length(); i++){
+            char test = s.charAt(i);
+            if(Character.isUpperCase(test)){
+                test = (char)((((test - 'A') + n) % 26) + 65);
+            }else if(Character.isLowerCase(test)){
+                test = (char)((((test - 'a') + n) % 26) + 'a');
+            }
+            answer += test;
+        }
+        return answer;
+    }
+}

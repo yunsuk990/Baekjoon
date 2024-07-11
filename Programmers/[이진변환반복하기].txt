@@ -1,0 +1,15 @@
+class Solution {
+    public int[] solution(String s) {
+        int n = 0;
+        int zero = 0;
+
+        while(!s.equals("1")){
+            n++;
+            int length = s.length();
+            s = s.replaceAll("0", "");
+            zero += length - s.length();
+            s = Integer.toBinaryString(s.length());
+        }
+        return new int[]{n,zero};
+    }
+}

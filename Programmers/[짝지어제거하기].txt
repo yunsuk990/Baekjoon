@@ -1,0 +1,20 @@
+import java.util.*;
+class Solution
+{
+    public int solution(String s)
+    {
+        // O(n)
+        Stack<Character> stack = new Stack();
+        for(char test: s.toCharArray()){
+            if(stack.isEmpty()){
+                stack.push(test);
+            }else if(stack.peek() == test){
+                stack.pop();
+            }else{
+                stack.push(test);
+            }
+        }
+
+        return stack.isEmpty() ? 1 : 0;
+    }
+}

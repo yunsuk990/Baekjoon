@@ -1,0 +1,39 @@
+import java.util.*;
+class Solution {
+    static Map<String, Integer> map;
+    public int solution(String[] want, int[] number, String[] discount) {
+        int answer = 0;
+        int n = discount.length;
+        int startIdx = 0;
+        int endIdx = 9;
+        map = new HashMap();
+        for(int i=0; i<=9; i++){
+            map.put(discount[i], map.getOrDefault(discount[i],0)+1);
+        }
+
+        while(true){
+            if(check(want, number)){
+                answer++;
+            }
+
+            if(endIdx >= n-1){
+                break;
+            }
+            map.put(discount[startIdx], map.get(discount[startIdx])-1);
+            startIdx++;
+            endIdx++;
+            map.put(discount[endIdx], map.getOrDefault(discount[endIdx], 0) +1);
+        }
+
+        return answer;
+    }
+
+    boolean check(String[] want, int[] number){
+        for(int i=0; i<want.length; i++){
+            if(number[i] != map.getOrDefault(want[i], 0)){
+                return false;
+            }
+        }
+        return true;
+    }
+}

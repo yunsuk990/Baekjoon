@@ -1,0 +1,27 @@
+class Solution {
+    public int solution(int n, int k) {
+        int answer = 0;
+        String num = Integer.toString(n,k);
+        String[] ans = num.split("0");
+        for(String s : ans){
+            if(s.equals("") || s.equals("1")){
+                continue;
+            }
+           if(prime(s)){
+               answer++;
+           }
+        }
+        return answer;
+    }
+
+    boolean prime(String an){
+        int count = 0;
+        long a = Long.parseLong(an);
+        for(int i = 2; i<=Math.sqrt(a); i++){
+            if(a % i == 0){
+                return false;
+            }
+        }
+        return true;
+    }
+}

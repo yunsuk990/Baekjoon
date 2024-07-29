@@ -1,0 +1,21 @@
+import java.util.*;
+class Solution {
+    public int solution(int[] topping) {
+        int answer = 0;
+        int[] left = new int[100001];
+        int[] right = new int[100001];
+        int rs = 0;
+        int ls = 0;
+
+        for(int i : topping) right[i]++;
+        for(int i: right) rs+= i == 0 ? 0 : 1;
+        for(int i : topping){
+            right[i]--;
+            if(right[i] == 0) rs--;
+            if(left[i] == 0) ls++;
+            left[i]++;
+            if(rs == ls) answer++;
+        }
+        return answer;
+    }
+}

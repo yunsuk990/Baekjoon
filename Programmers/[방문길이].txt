@@ -1,0 +1,35 @@
+import java.util.*;
+class Solution {
+    public int solution(String dirs) {
+        int answer = 0;
+        Map<Character, int[]> map = new HashMap();
+        Set<String> set = new HashSet();
+        map.put('U', new int[] {0,1});
+        map.put('D', new int[] {0,-1});
+        map.put('L', new int[] {-1,0});
+        map.put('R', new int[] {1,0});
+        int dx = 0;
+        int dy = 0;
+
+        for(int i=0; i<dirs.length(); i++){
+            int[] command = map.get(dirs.charAt(i));
+            dx+=command[0];
+            dy+=command[1];
+
+            if(dx > 5 || dx < -5){
+                dx -= command[0];
+                continue;
+            }
+            if(dy > 5 || dy < -5){
+                dy -= command[1];
+                continue;
+            }
+
+            set.add(""+(dx-command[0])+ ""+ (dy-command[1])+ ""+dx + ""+dy);
+            set.add(""+dx+""+ dy+ ""+(dx-command[0]) + ""+(dy-command[1]));
+
+        }
+        return set.size()/2;
+    }
+
+}

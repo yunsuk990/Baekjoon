@@ -16,12 +16,7 @@ class Solution {
             }else{
                 break;
             }
-
-
         }
-
-
-
         return answer;
     }
 }

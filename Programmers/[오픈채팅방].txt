@@ -1,0 +1,48 @@
+import java.util.*;
+
+class Solution {
+    public String[] solution(String[] record) {
+        ArrayList<Log> log = new ArrayList();
+        HashMap<String, String> map = new HashMap();
+
+
+        for(String rec: record){
+            String re[] = rec.split(" ");
+            switch(re[0]){
+                case "Enter":
+                    map.put(re[1], re[2]);
+                    log.add(new Log(re[0], re[1]));
+                    break;
+                case "Leave":
+                    log.add(new Log(re[0], re[1]));
+                    break;
+                case "Change":
+                    map.put(re[1], re[2]);
+                    break;
+            }
+        }
+
+        String[] answer = new String[log.size()];
+
+        for(int i=0; i<log.size(); i++){
+            Log l = log.get(i);
+            if(l.command.equals("Enter")){
+                answer[i] = map.get(l.id) + "님이 들어왔습니다.";
+            }else{
+                answer[i] =  map.get(l.id) + "님이 나갔습니다.";
+            }
+        }
+
+
+        return answer;
+    }
+
+    class Log {
+        String command;
+        String id;
+        Log(String command, String id){
+            this.command = command;
+            this.id = id;
+        }
+    }
+}

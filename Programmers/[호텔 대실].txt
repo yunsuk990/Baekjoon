@@ -1,0 +1,58 @@
+import java.util.*;
+class Solution {
+    public int solution(String[][] book_time) {
+        int answer = 0;
+        int num = 0;
+
+        PriorityQueue<Reservation> pq = new PriorityQueue();
+        HashMap<Integer, String> map = new HashMap();
+
+        for(String[] reserve : book_time){
+            pq.add(new Reservation(reserve[0], reserve[1], num++));
+        }
+
+        while(!pq.isEmpty()){
+            Reservation q = pq.poll();
+            if(map.size() == 0){
+                map.put(q.num, q.end);
+                continue;
+            }
+            String[] time1 = q.start.split(":");
+            int total1 = Integer.parseInt(time1[0]) * 60 + Integer.parseInt(time1[1]);
+            boolean flag = false;
+            for(Integer end : map.keySet()){
+                String[] time2 = map.get(end).split(":");
+                int total2 = Integer.parseInt(time2[0]) * 60 + Integer.parseInt(time2[1]);
+                // System.out.println("map: " + total2);
+                if(total2 + 10 <= total1){
+                    flag = true;
+                    map.put(end, q.end);
+                    break;
+                }
+            }
+
+            if(!flag){
+                map.put(q.num, q.end);
+                // System.out.println("add: " + q.end);
+            }
+        }
+        answer = map.size();
+        return answer;
+    }
+
+    class Reservation implements Comparable<Reservation>{
+        String start = "";
+        String end = "";
+        Integer num = 0;
+        public Reservation(String start, String end, Integer num){
+            this.start = start;
+            this.end = end;
+            this.num = num;
+        }
+
+        @Override
+        public int compareTo(Reservation o1){
+            return this.start.compareTo(o1.start);
+        }
+    }
+}

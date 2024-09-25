@@ -1,0 +1,50 @@
+import java.util.*;
+class Solution {
+    static ArrayList<Integer> graph[];
+    public int solution(int n, int[][] wires) {
+        int answer = Integer.MAX_VALUE;
+        graph = new ArrayList[n+1];
+
+        for(int i=1; i<=n; i++){
+            graph[i] = new ArrayList();
+        }
+
+        for(int i=0; i<wires.length; i++){
+            int[] wire = wires[i];
+            graph[wire[0]].add(wire[1]);
+            graph[wire[1]].add(wire[0]);
+        }
+
+        for(int i=0; i<wires.length; i++){
+            int[] wire = wires[i];
+            int a = wire[0], b = wire[1];
+            boolean visited[] = new boolean[n+1];
+            graph[a].remove(Integer.valueOf(b));
+            graph[b].remove(Integer.valueOf(a));
+
+            int cnt = dfs(1, visited);
+            int rem = Math.abs(cnt - n);
+            int sub = Math.abs(rem - cnt);
+            if(answer > sub){
+                answer = sub;
+            }
+            System.out.println(cnt+":"+rem);
+
+            graph[b].add(a);
+            graph[a].add(b);
+        }
+        return answer;
+    }
+
+    int dfs(int start, boolean[] visited){
+        visited[start] = true;
+        int cnt = 1;
+        for(int end: graph[start]){
+            if(!visited[end]){
+                visited[end] = true;
+                cnt += dfs(end, visited);
+            }
+        }
+        return cnt;
+    }
+}

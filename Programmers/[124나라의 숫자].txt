@@ -1,0 +1,13 @@
+class Solution {
+    public String solution(int n) {
+        String answer = "";
+        String[] num = new String[]{"4","1","2"};
+        while(n >= 1) {
+            int rem = n % 3;
+            n = n/3;
+            if(rem == 0) n--;
+            answer = num[rem] + answer;
+        }
+        return answer;
+    }
+}

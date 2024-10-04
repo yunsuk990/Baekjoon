@@ -1,0 +1,42 @@
+import java.util.*;
+class Solution {
+    static int max;
+    public String[] solution(String[] orders, int[] course) {
+        ArrayList<String> ans = new ArrayList();
+
+        for(int c : course){
+            HashMap<String, Integer> map = new HashMap();
+            max = 0;
+
+            for(int i=0; i<orders.length; i++){
+                char[] a = orders[i].toCharArray();
+                Arrays.sort(a);
+                dfs(new String(a), c, "", map, -1);
+            }
+
+            for(String k : map.keySet()){
+                int count = map.get(k);
+                if(max == count && count > 1){
+                    ans.add(k);
+                }
+            }
+        }
+        Collections.sort(ans);
+        return ans.toArray(new String[ans.size()]);
+    }
+
+    public void dfs(String order, int course, String test, HashMap<String, Integer> map, int s){
+        if(test.length() == course){
+            int count = map.getOrDefault(test,0)+1;
+            map.put(test, count);
+            max = Math.max(max, count);
+            return;
+        }
+
+        for(int i = s+1; i<order.length(); i++){
+            dfs(order, course, test+order.charAt(i), map, i);
+        }
+
+
+    }
+}

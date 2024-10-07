@@ -1,0 +1,49 @@
+import java.util.*;
+
+class Solution {
+    public String solution(String m, String[] musicinfos) {
+        String answer = "(None)";
+        int maxPlayTime = -1;
+        m = normalizeMelody(m);
+
+        for(String musicInfo : musicinfos){
+            String[] music = musicInfo.split(",");
+            String startTime = music[0];
+            String endTime = music[1];
+            String name = music[2];
+            String melody = music[3];
+
+            melody = normalizeMelody(melody);
+            int time = getTime(endTime) - getTime(startTime);
+
+            StringBuilder currentString = new StringBuilder();
+            int len = melody.length();
+            for(int i=0; i<time; i++){
+                currentString.append(melody.charAt(i % len));
+            }
+            String playedMelody = currentString.toString();
+
+            if(playedMelody.contains(m)){
+                if (time > maxPlayTime) {
+                    maxPlayTime = time;
+                    answer = name;
+                }
+            }
+        }
+        return answer;
+    }
+
+    String normalizeMelody(String m){
+        String[] cg = {"C#","D#","F#","G#","A#","B#"};
+        for(String c : cg){
+            String cc = c.substring(0,1).toLowerCase();
+            m = m.replace(c, cc);
+        }
+        return m;
+    }
+
+    int getTime(String s){
+        String[] info = s.split(":");
+        return Integer.parseInt(info[0]) * 60 + Integer.parseInt(info[1]);
+    }
+}

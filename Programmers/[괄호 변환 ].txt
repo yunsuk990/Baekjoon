@@ -1,0 +1,71 @@
+import java.util.*;
+class Solution {
+    public String solution(String p) {
+        String answer = "";
+
+        if(PassString(p)) return p;
+
+        return Corn(p);
+    }
+
+    String Corn(String p){
+        if(p.length() == 0) return "";
+
+        for(int i=1; i<p.length(); i++){
+            String u = p.substring(0, i+1);
+            String v = p.substring(i+1);
+            if(CountString(u)){
+                if(PassString(u)){
+                    u += Corn(v);
+                    return u;
+                }else{
+                    String ne = "(";
+                    ne += Corn(v);
+                    ne += ")";
+                    for(int j=1; j<u.length()-1; j++){
+                        char c = u.charAt(j);
+                        if(c == '('){
+                            ne += ')';
+                        }else{
+                            ne += '(';
+                        }
+                    }
+                    return ne;
+                }
+            }
+        }
+        return "";
+    }
+
+    boolean CountString(String s){
+        int left = 0;
+        int right = 0;
+        for(int i=0; i<s.length(); i++){
+            char c = s.charAt(i);
+            if(c =='('){
+                left++;
+            }
+            if(c ==')'){
+                right++;
+            }
+
+        }
+        return (left == right) ? true : false;
+    }
+
+
+
+    boolean PassString(String s){
+        int open = 0;
+        for(int i=0; i<s.length(); i++){
+            char c = s.charAt(i);
+            if(c == '('){
+                open++;
+            }else{
+                if(open == 0) return false;
+                open--;
+            }
+        }
+        return true;
+    }
+}

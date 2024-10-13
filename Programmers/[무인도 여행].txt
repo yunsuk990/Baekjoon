@@ -1,0 +1,52 @@
+import java.util.*;
+class Solution {
+    static int[] x = {1,-1,0,0};
+    static int[] y = {0,0,1,-1};
+    static boolean visited[][];
+    static char map[][];
+    public int[] solution(String[] maps) {
+        ArrayList<Integer> answer = new ArrayList();
+
+        map = new char[maps.length][maps[0].length()];
+
+        for(int i=0; i<maps.length; i++){
+            map[i] = maps[i].toCharArray();
+        }
+
+        visited = new boolean[map.length][map[0].length];
+
+        for(int i=0; i<map.length; i++){
+            for(int j=0; j<map[0].length; j++){
+                if(map[i][j] != 'X' && !visited[i][j]){
+                    answer.add(bfs(i,j));
+                }
+            }
+        }
+        Collections.sort(answer);
+        if(answer.size() == 0){
+            answer.add(-1);
+        }
+        return answer.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    int bfs(int i, int j){
+        Queue<int[]> q= new LinkedList();
+        q.add(new int[]{i,j});
+        visited[i][j] = true;
+        int sumAmount = map[i][j] - '0';
+
+        while(!q.isEmpty()){
+            int[] now = q.poll();
+            for(int c=0; c<4; c++){
+                int dx = now[0] + x[c];
+                int dy = now[1] + y[c];
+                if(dx>=0&&dx<map.length&&dy>=0&&dy<map[0].length&&!visited[dx][dy]&&map[dx][dy]!='X'){
+                    visited[dx][dy] = true;
+                    sumAmount += (map[dx][dy] - '0');
+                    q.add(new int[] {dx, dy});
+                }
+            }
+        }
+        return sumAmount;
+    }
+}

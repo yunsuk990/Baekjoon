@@ -1,0 +1,35 @@
+import java.util.*;
+class Solution {
+    public int[] solution(int n, long k) {
+        int[] answer = new int[n];
+            ArrayList<Integer> data = new ArrayList();
+            for(int i=1; i<=n; i++){
+                data.add(i);
+            }
+            k = k-1;
+
+            // n : 인원 수    4
+            // k : 번째 수    7
+            long temp = 0;
+            for(int i=0; i<n; i++){
+                if(k == 0){
+                    answer[i] = data.get(0);
+                    data.remove(0);
+                    continue;
+                }
+                temp = getFac(n-i-1);
+                answer[i] = data.get((int) (k/temp));
+                data.remove((int)(k/temp));
+                k = k%temp;
+            }
+            return answer;
+    }
+
+    long getFac(int n){
+        long c = 1;
+        for(int i=n; i>=1; i--){
+            c*=i;
+        }
+        return c;
+    }
+}

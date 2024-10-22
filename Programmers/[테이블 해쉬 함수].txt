@@ -1,0 +1,16 @@
+import java.util.*;
+class Solution {
+    public int solution(int[][] data, int col, int row_begin, int row_end) {
+        int answer = 0;
+        Arrays.sort(data, (a,b) -> a[col-1]!=b[col-1] ? a[col-1]-b[col-1] : b[0]-a[0]);
+        for(int i=row_begin-1; i<row_end; i++){
+            int[] test = data[i];
+            int sum = 0;
+            for(int j=0; j<test.length; j++){
+                sum += test[j] % (i+1);
+            }
+            answer ^= sum;
+        }
+        return answer;
+    }
+}

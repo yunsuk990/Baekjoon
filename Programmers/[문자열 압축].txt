@@ -1,0 +1,29 @@
+class Solution {
+    public int solution(String s) {
+        int n = s.length();
+        int answer = s.length();
+        int count = 1;
+        for(int i=1; i<=n/2; i++){
+            String made = "";
+            String before = s.substring(0, i);
+
+            for(int j=i; j<=n; j+=i){
+                int eIdx = Math.min(n,j+i);
+                String next = s.substring(j,eIdx);
+                if(next.equals(before)){
+                    count++;
+                }else{
+                    if(count >= 2){
+                        made += count;
+                    }
+                    made += before;
+                    before = next;
+                    count = 1;
+                }
+            }
+            made += before;
+            answer = Math.min(answer,made.length());
+        }
+        return answer;
+    }
+}

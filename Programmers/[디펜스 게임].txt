@@ -1,0 +1,24 @@
+import java.util.*;
+class Solution {
+    public int solution(int n, int k, int[] enemy) {
+        Queue<Integer> pq = new PriorityQueue(Collections.reverseOrder());
+        int len = enemy.length;
+        int answer = len;
+        for(int i=0; i<len; i++){
+            n -= enemy[i];
+            pq.add(enemy[i]);
+            if(n<0){
+                if(k>0){
+                    int c= pq.poll();
+                    n += c;
+                    k--;
+                }else{
+                    answer = i;
+                    break;
+                }
+            }
+        }
+
+        return answer;
+    }
+}

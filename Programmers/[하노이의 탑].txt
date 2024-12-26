@@ -1,0 +1,19 @@
+import java.util.*;
+class Solution {
+    static ArrayList<int[]> ans;
+    public int[][] solution(int n) {
+        ans = new ArrayList();
+        re(n,1,2,3);
+        return ans.stream().toArray(int[][]::new);
+    }
+
+    void re(int n, int start, int middle, int end){
+        if(n==1){
+            ans.add(new int[] {start,end});
+            return;
+        }
+        re(n-1, start, end,middle);
+        ans.add(new int[] {start,end});
+        re(n-1, middle, start,end);
+    }
+}

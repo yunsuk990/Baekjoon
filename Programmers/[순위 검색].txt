@@ -1,0 +1,59 @@
+import java.util.*;
+class Solution {
+    static Map<String, List<Integer>> data;
+    public int[] solution(String[] info, String[] query) {
+        int n = info.length;
+            int q = query.length;
+            data = new HashMap();
+            int[] answer = new int[q];
+            for(int i=0; i<n; i++){
+                String infos[] = info[i].split(" ");
+                makeSentence(infos, "",0);
+            }
+
+            for(String key : data.keySet()){
+                Collections.sort(data.get(key));
+            }
+
+            for(int i=0; i<q; i++){
+                int count = 0;
+                query[i] = query[i].replaceAll(" and ", "");
+                String[] qe = query[i].split(" ");
+                Integer score = Integer.parseInt(qe[1]);
+                String key = qe[0];
+                if(data.containsKey(key)){
+                    List<Integer> scores = data.get(key);
+                    int left = 0;
+                    int right = scores.size()-1;
+                    while(left<=right){
+                        int mid = (left+right)/2;
+                        if(scores.get(mid) < score){
+                            left = mid+1;
+                        }else{
+                            right = mid-1;
+                        }
+                    }
+                    count = scores.size()-left;
+                }
+                answer[i] = count;
+            }
+            return answer;
+    }
+
+    void makeSentence(String[] infos, String key,int depth){
+            if(depth == 4){
+                //System.out.println(key);
+                if(data.containsKey(key)){
+                    List<Integer> score = data.get(key);
+                    score.add(Integer.valueOf(infos[4]));
+                }else{
+                    ArrayList<Integer> score = new ArrayList();
+                    score.add(Integer.valueOf(infos[4]));
+                    data.put(key,score);
+                }
+                return;
+            }
+            makeSentence(infos, key+"-",depth+1);
+            makeSentence(infos, key+infos[depth], depth+1);
+        }
+}

@@ -1,0 +1,20 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        String[] dp = new String[1001];
+        dp[1] = "SK";
+        dp[2] = "CY";
+        dp[3] = "SK";
+        for(int i=1; i<=N; i++){
+            String pre = dp[i];
+            dp[i+1] = pre.equals("SK") ? "CY" : "SK";
+            dp[i+3] = pre.equals("SK") ? "CY" : "SK";
+        }
+        System.out.println(dp[N]);
+    }
+}

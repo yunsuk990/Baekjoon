@@ -1,0 +1,28 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int P = scanner.nextInt();
+        int[][] data = new int[P+1][21];
+        for(int i=1; i<=P; i++){
+            int p = scanner.nextInt();
+            int count = 0;
+            for(int j=1; j<=20; j++){
+                int score = scanner.nextInt();
+                data[p][j] = score;
+            }
+            for(int j=1; j<=20; j++){
+                for(int c=1; c<j; c++){
+                    if(data[p][j] < data[p][c]){
+                        count++;
+                    }
+                }
+            }
+            System.out.println(p + " " + count);
+
+        }
+    }
+}

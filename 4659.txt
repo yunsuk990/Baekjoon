@@ -1,0 +1,72 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Character> data = new ArrayList();
+        data.add('a');
+        data.add('e');
+        data.add('i');
+        data.add('o');
+        data.add('u');
+
+        while (true){
+            boolean isVowel = false;
+            String pwd = scanner.nextLine();
+            if(pwd.equals("end")) break;
+            for(char c: pwd.toCharArray()){
+                if(data.contains(c)){
+                    isVowel = true;
+                    break;
+                }
+            }
+            if(!isVowel){
+                System.out.println("<"+ pwd +">"+" is not acceptable.");
+                continue;
+            }
+
+            int a = 0;
+            int b = 0;
+            char bf = pwd.charAt(0);
+            boolean flag = true;
+
+            if(data.contains(bf)){
+                a = 1;
+            }else{
+                b = 1;
+            }
+
+
+            for(int i=1; i<pwd.length(); i++){
+                char ne = pwd.charAt(i);
+                if(ne == bf){
+                    if((ne != 'e' && ne != 'o')){
+                        flag = false;
+                        break;
+                    }
+                }
+                if(data.contains(ne)){
+                    a++;
+                    b=0;
+                }else{
+                    b++;
+                    a=0;
+                }
+                if(a==3 || b==3){
+                    flag = false;
+                    break;
+                }
+                bf = ne;
+
+            }
+            if(!flag){
+                System.out.println("<"+pwd+">"+" is not acceptable.");
+            }else{
+                System.out.println("<"+pwd+"> is acceptable.");
+            }
+
+        }
+    }
+}

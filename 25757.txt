@@ -1,0 +1,21 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        Set<String> player = new HashSet();
+        int N = scanner.nextInt();
+        String T = scanner.next();
+        Map<String, Integer> need = new HashMap();
+        need.put("Y", 2);
+        need.put("F", 3);
+        need.put("O", 4);
+        int needPeople = need.get(T);
+        for(int i=0; i<N; i++){
+            player.add(scanner.next());
+        }
+        System.out.println(player.size() / (needPeople-1));
+    }
+}

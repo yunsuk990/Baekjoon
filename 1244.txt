@@ -1,0 +1,48 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        boolean[] data = new boolean[N];
+        for(int i=0; i<N; i++){
+            int sw = scanner.nextInt();
+            data[i] = (sw == 0 ? false : true);
+        }
+        int studentCount = scanner.nextInt();
+        for(int i=0; i<studentCount; i++){
+            int sex = scanner.nextInt();
+            int number = scanner.nextInt();
+            changeSwitch(sex, number, data);
+        }
+
+        for(int i=0; i<N; i++){
+            int answer = (data[i] == true) ? 1 : 0;
+            System.out.print(answer + " ");
+            if((i+1) % 20 == 0){
+                System.out.println();
+            }
+        }
+    }
+
+    static void changeSwitch(int sex, int number, boolean[] data){
+        //남자
+        if(sex == 1){
+            for (int idx = number - 1; idx < data.length; idx += number) {
+                data[idx] = !data[idx];
+            }
+        }
+        //여자
+        else{
+            int left = number-1;
+            int right = number-1;
+            data[left] = !data[left];
+            while(left >= 0 && right < data.length && data[left] == data[right]){
+                data[left] = !data[left];
+                data[right] = !data[right];
+                left--; right++;
+            }
+        }
+    }
+}

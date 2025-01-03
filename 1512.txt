@@ -1,0 +1,26 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.next();
+        //포인터
+        int pt = 0;
+        // 숫자 증가
+        int base = 0;
+        while (base++ <= 30000) {
+            String tmp = String.valueOf(base);
+            for (int i = 0; i < tmp.length(); i++) {
+                if (tmp.charAt(i) == input.charAt(pt)){
+                    pt++;
+                }
+
+                if (pt == input.length()) {
+                    System.out.println(base);
+                    return;
+                }
+            }
+        }
+    }
+}

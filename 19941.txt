@@ -1,0 +1,44 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+    static boolean visited[];
+    static int max = 0;
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        //N: 식탁 길이 1<=N<=10^3
+        //1<=K<=10
+        int N = scanner.nextInt();
+        int K = scanner.nextInt();
+        visited = new boolean[N];
+        String position = scanner.next();
+
+        ArrayList<Integer> person = new ArrayList();
+        ArrayList<Integer> burger = new ArrayList();
+        for(int i=0; i<N; i++){
+            char type = position.charAt(i);
+            if(type == 'P'){
+                person.add(i);
+            }else{
+                burger.add(i);
+            }
+        }
+        // 투 포인터 방식으로 매칭
+        int pIdx = 0, hIdx = 0, max = 0;
+        while (pIdx < person.size() && hIdx < burger.size()) {
+            int people = person.get(pIdx);
+            int hamburger = burger.get(hIdx);
+
+            if (Math.abs(hamburger - people) <= K) {
+                max++;
+                pIdx++;
+                hIdx++;
+            } else if (people < hamburger) {
+                pIdx++;
+            } else {
+                hIdx++;
+            }
+        }
+        System.out.println(max);
+    }
+}
